@@ -1,8 +1,6 @@
-# dev-to-mcp
+![dev-to-mcp](.github/cover.png)
 
-<p align="center">
-  <img src=".github/cover.png" alt="dev-to-mcp cover" width="800">
-</p>
+# dev-to-mcp
 
 > A fast, single-binary **Model Context Protocol (MCP)** server for the [dev.to](https://dev.to) API, written in Go and spoken over **stdio**.
 
