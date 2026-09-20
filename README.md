@@ -1,10 +1,12 @@
 <p align="center">
-  <img src=".github/cover.png" alt="dev-to-mcp" width="100%">
+  <img src=".github/cover.png" alt="DEV.to MCP Server" width="100%">
 </p>
 
+<h1 align="center">dev-to-mcp</h1>
+
 <p align="center">
-  <b>A fast, single-binary MCP server for the dev.to API</b><br>
-  <sub>Written in Go. Speaks stdio. No servers, no cold starts.</sub>
+  <b>DEV.to MCP Server — fast, single-binary Model Context Protocol server for the Forem API</b><br>
+  <sub>Written in Go. Speaks stdio. No cold starts, no background servers.</sub>
 </p>
 
 <p align="center">
@@ -23,7 +25,7 @@
 
 ---
 
-The MCP client (Kiro, Cursor, Claude Desktop, VS Code, …) launches the binary on demand and talks to it over stdin/stdout. There is no port and no long-lived HTTP server to fall over.
+A [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server for the [DEV.to](https://dev.to) / [Forem](https://forem.com) API. Your MCP client (Kiro, Cursor, Claude Desktop, VS Code, …) launches the binary on demand and talks to it over stdin/stdout. There is no port and no long-lived HTTP server to fall over.
 
 > [!NOTE]
 > **AI-assisted project.** This server was designed and implemented with AI assistance (pair-programmed with an agent), then reviewed and tested by a human. Every design decision, security choice, and the code itself were verified before landing. Contributions are welcome under the same bar: reviewed and tested.
