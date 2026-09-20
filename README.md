@@ -1,4 +1,4 @@
-![dev-to-mcp](.github/cover.png)
+<img src=".github/cover.png" alt="dev-to-mcp" width="100%">
 
 # dev-to-mcp
 
