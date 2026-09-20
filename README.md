@@ -17,6 +17,7 @@
 </p>
 
 <p align="center">
+  <a href="#-why-this-one">Why this one?</a> •
   <a href="#-install">Install</a> •
   <a href="#-tools">Tools</a> •
   <a href="#%EF%B8%8F-configure">Configure</a> •
@@ -29,6 +30,24 @@ A [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server for th
 
 > [!NOTE]
 > **AI-assisted project.** This server was designed and implemented with AI assistance (pair-programmed with an agent), then reviewed and tested by a human. Every design decision, security choice, and the code itself were verified before landing. Contributions are welcome under the same bar: reviewed and tested.
+
+<br>
+
+## 🎯 Why this one?
+
+There are other DEV.to MCP servers. Here's what makes this one different:
+
+| | **dev-to-mcp** (this) | Python alternatives | Hosted gateways |
+|:--|:--:|:--:|:--:|
+| **Cold start** | ⚡ Instant | 🐌 Runtime + deps | 🌐 Network latency |
+| **Dependencies** | None (single binary) | Python + uv/pip | Third-party service |
+| **Secret handling** | 🔐 macOS Keychain native | Env var only | Varies |
+| **Transport** | stdio (client owns process) | stdio | HTTP |
+| **Self-hosted** | ✅ You control everything | ✅ | ❌ |
+| **Write tools** | ✅ create + update | ✅ | Sometimes |
+| **Crash behavior** | Tool error → model retries | Process dies | 5xx |
+
+**TL;DR:** If you want a DEV.to MCP that starts instantly, keeps your API key in the OS vault, and never phones home — this is the one.
 
 <br>
 
