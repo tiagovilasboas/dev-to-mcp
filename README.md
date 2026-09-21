@@ -296,5 +296,10 @@ One responsibility per file. Responses flow back as raw dev.to JSON — the cons
 ---
 
 <p align="center">
+  <a href="CONTRIBUTING.md">Contributing</a> •
+  <a href="LICENSE">License</a>
+</p>
+
+<p align="center">
   <sub>MIT License • Made with 🤖 + 👨‍💻</sub>
 </p>

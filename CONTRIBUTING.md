@@ -1,14 +1,14 @@
-# Contributing
+# Contributing to dev-to-mcp
 
-Thanks for your interest in improving **dev-to-mcp**.
+Thanks for your interest in contributing! This project is small and focused, so the process is lightweight.
 
-This is an AI-assisted project: code is pair-programmed with an agent and then reviewed and tested by a human. Contributions are held to the same bar — reviewed and tested before merge.
+## Ways to contribute
 
-## Code of Conduct
+- **Report bugs** — open an issue describing what happened and what you expected
+- **Suggest features** — open an issue explaining the use case
+- **Submit a fix or feature** — fork, code, test, PR
 
-This project is governed by our [Code of Conduct](CODE-OF-CONDUCT.md). By participating, you agree to uphold it. Report unacceptable behavior to the maintainer at tcarvalhovb@gmail.com or by opening a confidential issue.
-
-## Getting started
+## Development setup
 
 Requires Go 1.27+.
 
@@ -16,25 +16,63 @@ Requires Go 1.27+.
 git clone https://github.com/tiagovilasboas/dev-to-mcp.git
 cd dev-to-mcp
 go build -o dist/dev-to-mcp .
+go test ./...
 ```
 
-## Making a change
+### Project structure
 
-1. Fork the repo and create a branch from `main`.
-2. Make your change, keeping the layout's one-responsibility-per-file convention (see [CLAUDE.md](CLAUDE.md)).
-3. Run the quality checks:
-   ```bash
-   go vet ./...
-   go build ./...
-   go test ./...   # if you added tests
-   ```
-4. Do not hardcode secrets or personal identifiers. The API key is resolved from the Keychain or `DEV_TO_API_KEY`; never commit a key.
-5. Open a pull request describing what changed and how you verified it.
+```
+main.go                        bootstrap: resolve token, build server, run stdio
+internal/keychain/keychain.go  macOS Keychain integration
+internal/devto/
+├── client.go                  HTTP transport
+├── endpoints.go               one method per dev.to endpoint
+├── tools.go                   MCP tool definitions
+└── inputs.go                  typed tool inputs
+```
 
-## Reporting bugs
+### Testing locally
 
-Open an issue with steps to reproduce, the tool you called, and the observed vs expected result. Never paste your dev.to API key into an issue.
+1. Build the binary: `go build -o dist/dev-to-mcp .`
+2. Point your MCP client at `dist/dev-to-mcp`
+3. Test the tools via your client (Kiro, Cursor, Claude Desktop, etc.)
 
-## Questions
+For write tools, you'll need a dev.to API key — get one at [dev.to/settings/extensions](https://dev.to/settings/extensions).
 
-Open an issue for discussion.
+## Submitting a pull request
+
+1. **Open an issue first** (for non-trivial changes) — let's discuss the approach before you invest time coding
+2. **Fork and branch** — create a feature branch from `main`
+3. **Keep it focused** — one PR per feature or fix
+4. **Test your changes** — run `go test ./...` and manually test the affected tools
+5. **Write clear commits** — use imperative mood (`Add feature`, not `Added feature`)
+
+### Commit message format
+
+```
+<type>: <short summary>
+
+<optional body>
+```
+
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+
+Examples:
+- `feat: add get_followers tool`
+- `fix: handle rate limit response from dev.to`
+- `docs: clarify Keychain setup on macOS`
+
+## Code style
+
+- Follow standard Go conventions (`go fmt`, `go vet`)
+- Keep it simple — this is a small, focused project
+- One responsibility per file
+- Responses pass through as raw JSON — no response structs to maintain
+
+## Questions?
+
+Open an issue or start a discussion. We're friendly.
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the MIT License.
