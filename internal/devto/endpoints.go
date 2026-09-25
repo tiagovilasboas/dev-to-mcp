@@ -44,7 +44,7 @@ func (c *Client) GetComments(ctx context.Context, articleID int) (json.RawMessag
 }
 
 func (c *Client) SearchArticles(ctx context.Context, params url.Values) (json.RawMessage, error) {
-	return c.get(ctx, "search/feed_content", params)
+	return c.get(ctx, "articles/search", params)
 }
 
 // --- writes (require API key) ---

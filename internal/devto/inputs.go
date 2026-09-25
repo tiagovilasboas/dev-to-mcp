@@ -53,18 +53,18 @@ type GetCommentsInput struct {
 }
 
 type SearchInput struct {
-	Query        string `json:"q" jsonschema:"search query (required)"`
-	Page         int    `json:"page,omitempty" jsonschema:"pagination page (default 1)"`
-	PerPage      int    `json:"per_page,omitempty" jsonschema:"results per page (default 30)"`
-	SearchFields string `json:"search_fields,omitempty" jsonschema:"comma-separated fields: title, body_text, tag_list"`
+	Query   string `json:"q" jsonschema:"search query (required); matches title, tags and body"`
+	Top     int    `json:"top,omitempty" jsonschema:"only articles published in the last N days"`
+	Page    int    `json:"page,omitempty" jsonschema:"pagination page (default 1)"`
+	PerPage int    `json:"per_page,omitempty" jsonschema:"results per page (default 30)"`
 }
 
 func (in SearchInput) query() url.Values {
 	v := url.Values{}
 	setStr(v, "q", in.Query)
+	setInt(v, "top", in.Top)
 	setInt(v, "page", in.Page)
 	setInt(v, "per_page", in.PerPage)
-	setStr(v, "search_fields", in.SearchFields)
 	return v
 }
 
