@@ -67,7 +67,7 @@ func Register(s *mcp.Server, c *Client) {
 
 	mcp.AddTool(s, &mcp.Tool{
 		Name:        "search_articles",
-		Description: "Search articles by query string. Public, no auth.",
+		Description: "Full-text search of published dev.to articles (GET /api/articles/search): q matches title, tags and body; optional top (last N days), page, per_page. Public, no auth.",
 	}, jsonTool(func(ctx context.Context, in SearchInput) (json.RawMessage, error) {
 		if in.Query == "" {
 			return nil, fmt.Errorf("q (search query) is required")
