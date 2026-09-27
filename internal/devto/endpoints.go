@@ -3,8 +3,10 @@ package devto
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 // This file maps each dev.to endpoint to one small method. They only build the
@@ -17,12 +19,28 @@ func (c *Client) GetArticles(ctx context.Context, params url.Values) (json.RawMe
 	return c.get(ctx, "articles", params)
 }
 
+// GetMyArticles returns the authenticated user's articles. State must be one
+// of all, published, or unpublished; unpublished is useful for finding drafts.
+func (c *Client) GetMyArticles(ctx context.Context, state string, params url.Values) (json.RawMessage, error) {
+	if state != "all" && state != "published" && state != "unpublished" {
+		return nil, fmt.Errorf("state must be all, published, or unpublished")
+	}
+	return c.getAuthenticated(ctx, "articles/me/"+state, params)
+}
+
 func (c *Client) GetArticleByID(ctx context.Context, id int) (json.RawMessage, error) {
 	return c.get(ctx, "articles/"+strconv.Itoa(id), nil)
 }
 
 func (c *Client) GetArticleByPath(ctx context.Context, path string) (json.RawMessage, error) {
-	return c.get(ctx, "articles/"+url.PathEscape(path), nil)
+	// path is "username/article-slug": escape each segment individually so the
+	// separating slash is preserved and the DEV.to API can route correctly.
+	parts := strings.SplitN(path, "/", 2)
+	escaped := url.PathEscape(parts[0])
+	if len(parts) == 2 {
+		escaped += "/" + url.PathEscape(parts[1])
+	}
+	return c.get(ctx, "articles/"+escaped, nil)
 }
 
 func (c *Client) GetUserByID(ctx context.Context, id int) (json.RawMessage, error) {

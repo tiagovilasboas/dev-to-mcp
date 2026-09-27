@@ -69,6 +69,7 @@ Built on the official [`modelcontextprotocol/go-sdk`](https://github.com/modelco
 | Tool | Auth | Description |
 |:-----|:----:|:------------|
 | `get_articles` | — | List articles; filter by username, tag, state, or top (days) |
+| `get_my_articles` | 🔑 | List your unpublished drafts, published articles, or all articles |
 | `get_article` | — | One article by numeric `id` or `path` (`username/article-slug`) |
 | `get_user` | — | User by `id` or `username` |
 | `get_tags` | — | Popular tags, paginated |
@@ -77,7 +78,7 @@ Built on the official [`modelcontextprotocol/go-sdk`](https://github.com/modelco
 | `create_article` | 🔑 | Create an article (draft by default) |
 | `update_article` | 🔑 | Update an article by `id` |
 
-> **Tip:** Publishing is `create_article` / `update_article` with `published: true`. Read tools work with no key at all.
+> **Tip:** Public read tools work with no key. `get_my_articles` uses the API key and defaults to unpublished drafts. Publishing is `create_article` / `update_article` with `published: true`.
 
 <br>
 
@@ -285,7 +286,7 @@ internal/keychain/keychain.go  read a secret from the macOS Keychain (no CGO)
 internal/devto/
 ├── client.go                  HTTP transport: get / writeArticle / do
 ├── endpoints.go               one method per dev.to endpoint
-├── tools.go                   register the 8 MCP tools
+├── tools.go                   register the 9 MCP tools
 └── inputs.go                  typed tool inputs + query/body builders
 ```
 

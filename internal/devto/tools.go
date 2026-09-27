@@ -21,6 +21,17 @@ func Register(s *mcp.Server, c *Client) {
 	}))
 
 	mcp.AddTool(s, &mcp.Tool{
+		Name:        "get_my_articles",
+		Description: "List your own DEV.to articles using the configured API key. Defaults to unpublished articles (drafts); state can be unpublished, published, or all.",
+	}, jsonTool(func(ctx context.Context, in GetMyArticlesInput) (json.RawMessage, error) {
+		state := in.State
+		if state == "" {
+			state = "unpublished"
+		}
+		return c.GetMyArticles(ctx, state, in.query())
+	}))
+
+	mcp.AddTool(s, &mcp.Tool{
 		Name:        "get_article",
 		Description: "Get one article by numeric id or by path (\"username/article-slug\"). Public, no auth.",
 	}, jsonTool(func(ctx context.Context, in GetArticleInput) (json.RawMessage, error) {

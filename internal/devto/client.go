@@ -49,6 +49,27 @@ func (c *Client) get(ctx context.Context, path string, params url.Values) (json.
 	return c.do(req)
 }
 
+// getAuthenticated performs a GET on an endpoint that returns data belonging
+// to the API-key owner, such as their unpublished articles.
+func (c *Client) getAuthenticated(ctx context.Context, path string, params url.Values) (json.RawMessage, error) {
+	if c.apiKey == "" {
+		return nil, fmt.Errorf("no API key configured: store it in the macOS Keychain (service=dev-to-mcp) or set DEV_TO_API_KEY")
+	}
+
+	endpoint := baseURL + path
+	if q := params.Encode(); q != "" {
+		endpoint += "?" + q
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("api-key", c.apiKey)
+	req.Header.Set("Accept", apiV1Accept)
+	return c.do(req)
+}
+
 // writeArticle is the single path for POST/PUT of an article. The body is
 // always {"article": {...}} and both create and update reuse it.
 func (c *Client) writeArticle(ctx context.Context, method, path string, article map[string]any) (json.RawMessage, error) {

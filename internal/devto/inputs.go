@@ -15,6 +15,19 @@ type GetArticlesInput struct {
 	PerPage  int    `json:"per_page,omitempty" jsonschema:"articles per page (default 30, max 1000)"`
 }
 
+type GetMyArticlesInput struct {
+	State   string `json:"state,omitempty" jsonschema:"which of your articles to list: unpublished (drafts), published, or all; defaults to unpublished"`
+	Page    int    `json:"page,omitempty" jsonschema:"pagination page (default 1)"`
+	PerPage int    `json:"per_page,omitempty" jsonschema:"articles per page (default 30, max 1000)"`
+}
+
+func (in GetMyArticlesInput) query() url.Values {
+	v := url.Values{}
+	setInt(v, "page", in.Page)
+	setInt(v, "per_page", in.PerPage)
+	return v
+}
+
 func (in GetArticlesInput) query() url.Values {
 	v := url.Values{}
 	setStr(v, "username", in.Username)
