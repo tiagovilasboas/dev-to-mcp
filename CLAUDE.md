@@ -22,7 +22,7 @@ Layered, one responsibility per file:
 - `internal/keychain/keychain.go` — read a secret from the macOS Keychain via the `security` CLI (no CGO).
 - `internal/devto/client.go` — HTTP transport only: `get`, `writeArticle`, `do`. Maps non-2xx to errors carrying the body.
 - `internal/devto/endpoints.go` — one small method per dev.to endpoint; builds path/query and delegates.
-- `internal/devto/tools.go`: registers the 9 MCP tools; `jsonTool` adapts a client call into the SDK's typed handler.
+- `internal/devto/tools.go` — registers the 9 MCP tools; `jsonTool` adapts a client call into the SDK's typed handler.
 - `internal/devto/inputs.go` — typed tool inputs with `jsonschema` tags; each owns its query/body builder.
 
 ## Conventions
