@@ -35,7 +35,8 @@ func (c *Client) GetArticleByID(ctx context.Context, id int) (json.RawMessage, e
 func (c *Client) GetArticleByPath(ctx context.Context, path string) (json.RawMessage, error) {
 	// path is "username/article-slug": escape each segment individually so the
 	// separating slash is preserved and the DEV.to API can route correctly.
-	parts := strings.SplitN(path, "/", 2)
+	// A leading slash (the form DEV.to itself returns in "path") is dropped.
+	parts := strings.SplitN(strings.TrimPrefix(path, "/"), "/", 2)
 	escaped := url.PathEscape(parts[0])
 	if len(parts) == 2 {
 		escaped += "/" + url.PathEscape(parts[1])

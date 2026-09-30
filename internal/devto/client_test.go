@@ -125,6 +125,9 @@ func TestEndpointsBuildPathsAndQueries(t *testing.T) {
 		{"article by id", func(c *Client) error { _, err := c.GetArticleByID(ctx, 7); return err }, "/api/articles/7", ""},
 		{"article by path", func(c *Client) error { _, err := c.GetArticleByPath(ctx, "ana/hello-world-1a2b"); return err }, "/api/articles/ana/hello-world-1a2b", ""},
 		{"article by path escapes segments", func(c *Client) error { _, err := c.GetArticleByPath(ctx, "a b/c?d"); return err }, "/api/articles/a%20b/c%3Fd", ""},
+		// DEV.to returns "path":"/user/slug"; passing it back must not produce
+		// "articles//user%2Fslug", which the API answers with 404.
+		{"article by path with leading slash", func(c *Client) error { _, err := c.GetArticleByPath(ctx, "/ana/hello-world-1a2b"); return err }, "/api/articles/ana/hello-world-1a2b", ""},
 		{"article by path without slash", func(c *Client) error { _, err := c.GetArticleByPath(ctx, "slug"); return err }, "/api/articles/slug", ""},
 		{"user by id", func(c *Client) error { _, err := c.GetUserByID(ctx, 9); return err }, "/api/users/9", ""},
 		{"user by username", func(c *Client) error { _, err := c.GetUserByUsername(ctx, "ana"); return err }, "/api/users/by_username", "url=ana"},
